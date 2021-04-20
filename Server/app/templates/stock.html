@@ -1,0 +1,286 @@
+
+<html>
+    <head>
+        <title>Prediction</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/initial.css') }}"> <!--공통 CSS -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/stock.css') }}"> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+        <script src="https://kit.fontawesome.com/c9910e2b4d.js" crossorigin="anonymous"></script>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <!-- Plotly.js -->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        
+        <script src="{{ url_for('static', filename='js/nav_toggle.js') }}" defer></script>
+    </head>
+    <body>
+
+        <nav class="navbar">
+            <div class="navbar_logo">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" width="120">
+            </div>
+    
+            <ul class="navbar_menu">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/stock">Prediction</a></li>
+                <li><a href="Top Rank">Top Rank</a></li>
+                <li><a href="Chart">Chart</a></li>
+                <li><a href="/about">About</a></li>
+           
+    
+            </ul>
+    
+            <ul class="navbar_icons">
+                <li><i class="fab fa-twitter"></i></li>
+                <li><i class="fab fa-facebook-f"></i></li>
+                <li><a href="/">Logout</a></li>
+    
+            </ul>
+
+            <a href="#" class="navbar_tbn">
+                <i class="fas fa-bars"></i>            
+            </a>
+        </nav>
+    
+    <!--          Navigation Bar           -->
+
+
+
+        <div class="wrap">
+                <div id = "Title">
+                    Prediction
+                </div>
+            <div class="form-wrap">
+
+                <form id="stock" action="/pred" class="input-group" method="POST">
+                    <H3>종목 선택</H3>
+                    <input type="hidden" name="show" id="show" value=1>
+                    <input type="text" class="input-field" placeholder="ex) SK Innovation" name="ticker" id="ticker" required>
+                    <div id="item0">
+                        <button class="submit" id="submit">Predict</button>
+
+                      
+                    </div>
+                </form>
+                
+            </div> 
+
+        <div class="graph">    
+       <div id='ct'>
+           <div id="ct2">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>    
+            <script>
+                $(document).ready(function() {
+                    $('#ct2').hide();
+                    $('#stock').submit(function(){    
+                        $('#ct2').show();
+                                        return true;
+                        });
+                });
+                </script>
+            </div>
+            <script>
+                if('{{show}}'=='1') $('.graph').show();
+                $('#ct2').hide();
+               
+
+
+
+
+
+
+
+                var a='{{date}}';
+                var b='{{price}}';
+                
+                a=a.slice(1,-1);
+                b=b.slice(1,-1);
+                var c=a.split(',');
+                var d=b.split(',');
+                //console.log(c);
+                //console.log(d);
+                var trace1 = 
+                {
+                    x: c,
+                    y: d,
+                    type: 'scatter',
+                    name: 'Original Price',
+                    line: {
+                        color: 'rgb(0, 0, 255)',
+                        width: 3
+                    }
+                };
+                var e='{{pred_date}}';
+                var f='{{pred_price}}';
+                
+                e=e.slice(1,-1);
+                f=f.slice(1,-1);
+                var g=e.split(',');
+                var h=f.split(',');
+                //console.log(g);
+                //console.log(h);
+                var trace2 = 
+                {
+                    x: g,
+                    y: h,
+                    type: 'scatter',
+                    name: 'Predicted Price',
+                    line: {
+                        color: 'rgb(255, 0, 0)',
+                        width: 3
+                    }
+                };
+                var data = [trace1, trace2];
+                var str="{{ticker}}"+ " 예측 결과";
+                var layout={
+                    title:{
+                        text : str,
+                        size : 18
+                    }
+                    ,yaxis: {
+                        tickformat : ":04,2f"
+                    },
+                    autosize: true
+                };
+                var config = {responsive: true}
+                Plotly.newPlot('ct', data,layout,config);
+                
+            </script>
+       </div>
+       
+    </div>
+
+
+        <div class = "backtest">
+            
+            <div id = "test">
+            <script>
+                if('{{show}}'=='1') $('.backtest').show();
+
+                var a='{{date}}';
+                var b='{{price}}';
+                console.log(b);
+
+                a=a.slice(1,-1);
+                b=b.slice(1,-1);
+                var c=a.split(',');
+                var d=b.split(',');
+                //console.log(c);
+                //console.log(d);
+                var trace1 = 
+                {
+                    x: c,
+                    y: d,
+                    type: 'scatter',
+                    name: 'Original Price',
+                    line: {
+                        color: 'rgb(0, 0, 255)',
+                        width: 3
+                    }
+                };
+                var pred01='{{pred01}}';
+                console.log(pred01);
+
+                pred01=pred01.slice(1,-1);
+                var pred01_result=pred01.split(',');
+
+                var trace2 = {
+                x: c,
+                y: pred01_result,
+                mode: 'lines',
+                name: 'DA01',
+                line: {
+                    dash: 'dot',
+                    width: 4
+                    }
+                };
+
+                var pred05='{{pred05}}';
+                console.log(pred01);
+
+                pred05=pred05.slice(1,-1);
+                var pred05_result=pred05.split(',');
+
+                var trace3 = {
+                x: c,
+                y: pred05_result,
+                mode: 'lines',
+                name: 'DA05',
+                line: {
+                    dash: 'dot',
+                    width: 4
+                    }
+                };
+
+                var pred20='{{pred20}}';
+                console.log(pred20);
+
+                pred20=pred20.slice(1,-1);
+                var pred20_result=pred20.split(',');
+
+                var trace4 = {
+                x: c,
+                y: pred20_result,
+                mode: 'lines',
+                name: 'DA20',
+                line: {
+                    dash: 'dot',
+                    width: 4
+                    }
+                };
+                var data = [trace1, trace2,trace3, trace4];
+                var str="Back Testing";
+                var layout={
+                    title:{
+                        text : str,
+                        size : 18
+                    }
+                    ,yaxis: {
+                        tickformat : ":04,2f"
+                    }
+                };
+                var config = {responsive: true}
+                Plotly.newPlot('test', data,layout,config);
+                
+            </script>
+            </div>
+       
+
+        </div>
+        <table border="1">
+            <th>Metric</th>
+            <th>DAY1</th>
+            <th>DAY5</th>
+            <th>DAY20</th>
+
+            <tr><!-- 첫번째 줄 시작 -->
+                <td>DA</td>
+                <td>{{DA01}}</td>
+                <td>{{DA05}}</td>
+                <td>{{DA20}}</td>
+
+            </tr><!-- 첫번째 줄 끝 -->
+            <tr><!-- 두번째 줄 시작 -->
+                <td>RMSE</td>
+                <td>{{RMSE01}}</td>
+                <td>{{RMSE05}}</td>
+                <td>{{RMSE20}}</td>
+            </tr><!-- 두번째 줄 끝 -->
+            </table>
+       </div>
+            
+        
+        {%with messages = get_flashed_messages()%}
+        {%if messages %}
+          <script type="text/javascript">
+            alert("{{messages[-1]}}");
+          </script>
+          {%endif%}
+        {%endwith%}
+
+
+
+
+    </body>
+</html>

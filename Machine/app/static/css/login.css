@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+@font-face {
+    font-family: myfont ;
+    src: url('https://tistory2.daumcdn.net/tistory/3501574/skin/images/Chomsky.woff') ;
+}
+
+
+#item1{
+    font-size: 40px;
+    color: #F3CA0F;
+    font-weight: bold;
+}
+
+#item4{
+    margin-left:360px;
+}
+
+.wrap {
+    height: 100%;
+    width: 100%;
+    background-image: url('https://mildred-elley.edu/wp-content/uploads/2019/07/nyc-bg.jpg');
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+}
+.form-wrap {
+    width: 380px;
+    height: 480px;
+    position: relative;
+    margin: 5% auto;
+    margin-bottom: 0;
+    background-color: #ffffff;
+    background-color: rgba( 255, 255, 255, 0.5 );
+    padding: 5px;
+    overflow: hidden;
+}
+.button-wrap {
+    width: 233px;
+    margin: 35px auto;
+    position: relative;
+    box-shadow: 0 0 28px 9px #3D3D3D inset;
+    border-radius: 30px;
+}
+.togglebtn {
+    padding: 10px 30px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative;
+    color: #F2F2F2;
+    font-weight:bold;
+
+}
+#btn {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 110px;
+    height: 100%;
+    background: linear-gradient(to right,  #3F6473, #012840);
+    border-radius: 30px;
+    transition: .5s;
+}
+.social-icons {
+    margin: 30px auto;
+    text-align: center;
+}
+.social-icons img {
+    width: 30px ;
+    cursor: pointer;
+}
+.input-group {
+    top: 180px;
+    position: absolute;
+    width: 280px;
+    transition: .5s;
+}
+.input-field {
+    width: 100%;
+    padding: 10px 0;
+    margin: 5px 0;
+    border: none;
+    border-bottom: 1px solid rgb(96, 96, 96);
+    outline: none;
+    background: transparent;
+      font-weight: bold;
+}
+
+::placeholder{
+  color: black;
+  opacity: 0.75;
+}
+
+.submit {
+    width: 85%;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    background: linear-gradient(to right, #3F6473, #012840);
+    border: 0;
+    color: #F2F2F2;
+    outline: none;
+    border-radius: 30px;
+}
+.checkbox {
+    margin: 30px 10px 30px 0;
+    color: black;
+    opacity: 0.9;
+}
+span {
+    color: black;
+    font-size: 12px;
+    bottom: 68px;
+    position: absolute;
+    opacity: 0.9;
+}
+#login {
+    left: 50px;
+}
+#register {
+    left: 450px;
+}
+
+#welcome {
+    color: #777;
+    font-size: 20px;
+}

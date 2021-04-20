@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+  
+    <title>Hail Fortuneteller Service</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stock.css') }}"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/templatemo-host-cloud.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/owl.css') }}">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+<!--
+
+Host Cloud Template
+
+https://templatemo.com/tm-541-host-cloud
+
+-->
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('home') }}"><h2>Hail <em>Fortuneteller</em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('home') }}">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('rank') }}">Rank</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('services') }}">Our Service</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('contact') }}">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+          <div class="functional-buttons">
+            <ul>
+              <li><a href="#">Log in</a></li>
+              <li><a href="#">Sign Up</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 offset-md-2">
+            <div class="header-text caption">
+              <h2>Stock Price Forecast</h2>
+              <div id="search-section">
+                <form id="stock" name="gs" method="POST" action="/">
+                  <div class="searchText">
+                    <input type="hidden" name="show" id="show" value=1>
+                    <input type="text" class="searchText" placeholder="Enter stock ticker here..." name="ticker" id="ticker" >
+                    <!-- <ul>
+                      <li><label><input type="checkbox" name="ext_com" value="1"><span>KOR <em>(₩)</em></span></label></li>
+                      <li><label><input type="checkbox" name="ext_net" value="1"><span>USD <em>($)</em></span></label></li>
+                      <li><label><input type="checkbox" name="ext_org" value="1"><span>JPY <em>(¥)</em></span></label></li>
+                      <li><label><input type="checkbox" name="ext_in" value="1"><span>CNY <em>(¥)</em></span></label></li>
+                    </ul> -->
+                  </div>
+                      <input type="submit" name="results" class="main-button" value="Predict Now"/>
+                   </form>
+               <div class="advSearch_chkbox">
+               </div>
+              </div>
+              <br><br><br><br><br>
+              <p style="color:aliceblue">HAIL Fortuneteller는 KOSPI 상위 30개 종목(거래량 기준)을 인공지능으로 분석하여,<br>
+                최신 날짜를 기준으로 1일, 5일, 20일 뒤 5% 이상 상승할 종목을 예측하여 추천해 주는 서비스입니다.<br>
+                일반 투투자에게 간편한 투자 의사결정 경험을 제공하는 데에 가장 큰 의의를 두고 있습니다.
+                </p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!-- Banner Ends Here -->
+
+    <div class="contain" id="contain">
+      <script>
+        if('{{show}}'!='1') $('.contain').hide();
+        
+      </script>
+      
+      <div class="container my-3">
+        <br><br><br>
+        <h1 style="color:#00bcd4;">Predict Graph</h1>
+        <div class="graph">
+          <div id='ct'>
+              <div id="ct2">
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>    
+                  <script>
+                      $(document).ready(function() {
+                          $('#ct2').hide();
+                          $('#stock').submit(function(){    
+                              $('#ct2').show();
+                                              return true;
+                              });
+                      });
+                  </script>
+              </div>
+           <script>
+               if('{{show}}'=='1') $('.contain').show();
+               $('#ct2').hide();
+               var a='{{date}}';
+               var b='{{price}}';
+               console.log(a);
+               console.log("SHOW:", '{{show}}');
+               //a=a.slice(1,-1);
+               b=b.slice(1,-1);
+               var c=a.split(',');
+               var d=b.split(',');
+               //console.log(c);
+               for(var i=0; i<c.length; i++) {
+                    c[i]=c[i].substring(8,16);
+                }
+               console.log(c);
+               var trace1 = 
+               {
+                   x: c,
+                   y: d,
+                   type: 'scatter',
+                   name: 'Original Price',
+                   line: {
+                       color: 'rgb(0, 0, 255)',
+                       width: 3
+                   }
+               };
+               var e='{{pred_date}}';
+               var f='{{pred_price}}';
+               
+               //e=e.slice(1,-1);
+               f=f.slice(1,-1);
+               var g=e.split(',');
+               for(var i=0; i<g.length; i++) {
+                    g[i]=g[i].substring(8,16);
+                }
+               var h=f.split(',');
+               console.log(g);
+               //console.log(h);
+               var trace2 = 
+               {
+                   x: g,
+                   y: h,
+                   type: 'scatter',
+                   name: 'Predicted Price',
+                   line: {
+                       color: 'rgb(255, 0, 0)',
+                       width: 3
+                   }
+               };
+               var data = [trace1, trace2];
+               var str="{{ticker}}";
+               var layout={
+                   title:{
+                       text : str,
+                       size : 18
+                   }
+                   ,xaxis: {
+                       tickformat : "%m-%d"
+                   }
+                   ,yaxis: {
+                       tickformat : ":04,2f"
+                   },
+                   autosize: true
+               };
+               var config = {responsive: true}
+               Plotly.newPlot('ct', data,layout,config);
+           </script>
+      </div>
+   </div>
+
+    <!-- Services Starts Here -->
+    <br>
+    <h1 style="color:#00bcd4;">Back-Test Results</h1>
+    <br>
+    <h2 style="color:#00bcd4; font-size: 18px;">RMSE (Root Mean Squared Error)</h2>
+    <p>
+      AI 예측 결과들의 오차의 제곱에 대해 평균을 취하고 제곱근을 한 것으로 예측에 얼마나 많은 오류가 있는지를 알려주는 지표
+      </p>
+    <br><br>
+    <h2 style="color:#00bcd4; font-size: 18px;">DA (Directional Accuracy)</h2>
+    <p>
+      AI 예측 결과들과 실제 값들의 등락이 일치하는지를 알려주는 지표.
+    </p>
+    <br><br>
+        <table class="table">
+          <thead>
+          <tr class="thead-light">
+              <th>종목명</th>
+              <th>DA1</th>
+              <th>DA5</th>
+              <th>DA20</th>
+              <th>RMSE01</th>
+              <th>RMSE05</th>
+              <th>RMSE20</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+              <td>{{ticker}}</td>
+              <td>{{DA01}}</td>
+              <td>{{DA05}}</td>
+              <td>{{DA20}}</td>
+              <td>{{RMSE01}}</td>
+              <td>{{RMSE05}}</td>
+              <td>{{RMSE20}}</td>
+          </tr>
+        </tbody>
+        </table>
+
+        <br><br>
+        <h2 style="color:#00bcd4; font-size: 24px;">Back Test Graph</h2>
+        <br>
+        <p>
+          AI가 예측한  예전 결과를 보여주는 창
+        </p>
+
+        <div class = "backtest">
+            
+          <div id = "test">
+          <script>
+              if('{{show}}'=='1') $('.backtest').show();
+    
+              var a='{{date}}';
+              var b='{{price}}';
+              console.log(b);
+    
+              a=a.slice(1,-1);
+              b=b.slice(1,-1);
+              var c=a.split(',');
+              var d=b.split(',');
+              //console.log(c);
+              //console.log(d);
+              var trace1 = 
+              {
+                  x: c,
+                  y: d,
+                  type: 'scatter',
+                  name: 'Original Price',
+                  line: {
+                      color: 'rgb(0, 0, 255)',
+                      width: 3
+                  }
+              };
+              var pred01='{{pred01}}';
+              console.log(pred01);
+    
+              pred01=pred01.slice(1,-1);
+              var pred01_result=pred01.split(',');
+    
+              var trace2 = {
+              x: c,
+              y: pred01_result,
+              mode: 'lines',
+              name: 'DA01',
+              line: {
+                  dash: 'dot',
+                  width: 4
+                  }
+              };
+    
+              var pred05='{{pred05}}';
+              console.log(pred01);
+    
+              pred05=pred05.slice(1,-1);
+              var pred05_result=pred05.split(',');
+    
+              var trace3 = {
+              x: c,
+              y: pred05_result,
+              mode: 'lines',
+              name: 'DA05',
+              line: {
+                  dash: 'dot',
+                  width: 4
+                  }
+              };
+    
+              var pred20='{{pred20}}';
+              console.log(pred20);
+    
+              pred20=pred20.slice(1,-1);
+              var pred20_result=pred20.split(',');
+    
+              var trace4 = {
+              x: c,
+              y: pred20_result,
+              mode: 'lines',
+              name: 'DA20',
+              line: {
+                  dash: 'dot',
+                  width: 4
+                  }
+              };
+              var data = [trace1, trace2,trace3, trace4];
+              var str="";
+              var layout={
+                  title:{
+                      text : str,
+                      size : 18
+                  }
+                  ,yaxis: {
+                      tickformat : ":04,2f"
+                  }
+              };
+              var config = {responsive: true}
+              Plotly.newPlot('test', data,layout,config);
+              
+          </script>
+          </div>
+    
+      </div>
+
+      </div>
+    </div>      
+
+
+    <!-- Footer Starts Here -->
+    <footer class="foot">
+      <div>
+        <script>if('{{show}}'!='1') $('.foot').hide();</script>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="sub-footer">
+                <p>Copyright &copy; 2021 HGU Hail Laboratory
+                <br>CSS Designed by <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer Ends Here -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
+
+    <!-- Additional Scripts -->
+    <script src="{{ url_for('static', filename='assets/js/custom.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='assets/js/owl.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='assets/js/accordions.js') }}" defer></script>
+
+
+
+    <script language = "text/Javascript">
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+  </body>
+</html>

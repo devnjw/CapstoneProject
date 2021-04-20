@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+    <title>Hail Fortuneteller Service - Models</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/templatemo-host-cloud.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/owl.css') }}">
+<!--
+
+Host Cloud Template
+
+https://templatemo.com/tm-541-host-cloud
+
+-->
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{{ url_for('home') }}"><h2>Hail <em>Fortuneteller</em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('home') }}">Home
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('rank') }}">Rank</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('services') }}">Our Service</a>
+                <span class="sr-only">(current)</span>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('contact') }}">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+          <div class="functional-buttons">
+            <ul>
+              <li><a href="#">Log in</a></li>
+              <li><a href="#">Sign Up</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Page Content -->
+    <!-- Heading Starts Here -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Our Service</h1>
+            <p><a href="{{ url_for('home') }}">Home</a> / <span>Our Services</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Heading Ends Here -->
+
+
+    <!-- Services Starts Here -->
+    <div class="services-section services-page">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 style="color:#00bcd4">System Architecture</h2>
+            <img src="{{ url_for('static', filename='assets/images/SystemArchitecture.png') }}" style="max-width: 100%; height: auto; margin: 30px 0px" alt="">
+            <p>Hail Fortuneteller System은 크게 네가지 단계로 구분됩니다.<br>
+              | Machine: 기계학습 담당  |  Database: 학습 및 예측 결과 저장  |  
+              Server: 데이터 송수신  |  Client: 데이터 시각화 | 단계로 구분됩니다
+            </p><br><br>
+
+            <h2 style="color:#00bcd4">System UML Diagram</h2>
+            <center><img src="{{ url_for('static', filename='assets/images/SystemModel.png') }}" style="max-width: 90%; height: auto; margin: 25px 0px 10px 0px" alt=""></center>
+            <p style="text-align:center">＜UML Diagram＞</p>
+            <div class="section-heading">
+              <span>Machine</span>
+              <h3>LSTM - Deep Learning</h3>
+              <center><img src="{{ url_for('static', filename='assets/images/LSTM.png') }}" style="max-width: 50%; height: auto; margin: 25px 0px 10px 0px" alt=""></center>
+              <p>Hail Fortuneteller는 LSTM모델을 통해 주식의 등락을 예측하고자 합니다.
+                LSTM(Long Short-Term Memory)이란 RNN(Recurrent Neural Network)의 일종입니다.
+                RNN은 입력과 출력을 시퀀스 단위로 처리하는 시퀀스 모델이며 딥러닝에서 가장 기본적인 시퀀스 모델입니다. 현재 우리의 모델은 20일의 데이터를 가지고 다가올 하루를 예측하는 모델입니다.
+                <br><br>
+                RNN 모델은 연산 결과를 그 다음층의 입력값으로 사용하는 특징이 존재하여
+                연속적인 데이터를 처리하기 적합합니다. 그렇기 때문에 시간을 하나의 축으로
+                매일 매일 새로운 데이터가 누적되는 주식 도메인에서 주가를 예측할 때 사용하는 모델로 채택하기
+                적합한 성질을 갖고 있습니다.
+                <br><br>
+                하지만 RNN은 짧은 시퀀스에서만 효과적이고, 시점(time step)이 길어졌을 때 앞의 정보가 손실되는 현상이 발생하여 시점이 충분히 긴 상황에서 시간상으로 이전의 값이 이후까지 영향을 주지 못하게 되었습니다. 이렇게 RNN이 충분히 긴 시간동안 기억하지 못하는 장기 의존성 문제 가 발생하는 단점을 갖고 있었습니다.
+                <br><br>
+                LSTM은 전통적인 RNN구조에 변형을 주어 RNN의 장기 의존성을 보완한 모델입니다.
+                직전 데이터 뿐 아니라, 더 이전의 데이터를 고려할 수 있도록 만들어
+                시간 축 순서상 과거에 존재할 수 있는 중요 데이터를 잊지 않도록 만들어두었습니다.</p>
+                <br>
+
+                <span>Database</span>
+              <h3>MySql - AWS RDS</h3>
+              <center><img src="{{ url_for('static', filename='assets/images/AWS_RDS.png') }}" style="max-width: 50%; height: auto; margin: 0px 0px 10px 0px" alt=""></center>
+              <p>
+                Database는 AWS RDS(MySql)를 사용하고 있습니다.
+                주식 가격 예측 결과값과 모델 학습 데이터를 저장하는 목적으로 사용됩니다.
+                데이터의 구조와 양이 정해져 있기 때문에 관계형 데이터베이스이며 무료 오픈소스인 MySql이 채택되었습니다
+                <br><br>
+                Database Table은 위 UML Diagram에 나와 있듯이 네 가지 테이블로 구성되어 있습니다.
+                <br><br>
+                <div style="font-weight: bold;">TrainParams</div>
+                <ul style="color: #6a6a6a;">
+                  <li>모델 학습 과정 매 Epoch 마다 Hyper Parameters와 Metric 값들을 기록합니다.</li>
+                  <li>연구 과정에서 모델 학습 과정에 대한 인사이트를 줄 수 있을 것으로 기대됩니다.</li>
+                </ul>
+
+                <div style="font-weight: bold;">BestModel</div>
+                <ul style="color: #6a6a6a;">
+                  <li>예측 성능이 가장 좋은 모델의 저장 경로와 Parameter Key 값을 기록합니다.</li>
+                  <li>모델의 저장 경로에 저장되는 실제 모델은 .pt 형태의 바이너리 파일로 저장됩니다.</li>
+                </ul>
+
+                <div style="font-weight: bold;">PredictionResults</div>
+                <ul style="color: #6a6a6a;">
+                  <li>사용자에게 서비스하기 위한 테이블입니다.</li>
+                  <li>주식 가격 예측 결괏값들이 테이블에 기록되고 사용자의 요청에 따라 데이터 가공하여 제공합니다.</li>
+                </ul>
+                <div style="font-weight: bold;">TickerInfo</div>
+                <ul style="color: #6a6a6a;">
+                  <li>주식 코드, 한국어 이름, 영문 이름과 같은 기본적인 주식 정보를 담고 있습니다.</li>
+                </ul>
+              </p>
+
+              <span>Server</span>
+              <h3>Flask - AWS EC2</h3>
+              <center><img src="{{ url_for('static', filename='assets/images/EC2.png') }}" style="max-width: 50%; height: auto; margin: 0px 0px 25px 0px" alt=""></center>
+              <p>
+                Server에서는 PyTorch Framework와의 코드 이식성을 고려하여 python 기반의 백엔드 프레임워크인 Flask를 사용합니다.
+                Flask는 파이썬으로 작성된 마이크로 웹 프레임워크로, Werkzeug 툴킷과 Jinja2 템플릿 엔진에 기반을 두고 있습니다.
+                <br><br>
+                서버는 Web Server와 Machine Server 두 가지로 구분됩니다.
+                웹 서비스를 호스팅하기 위한 Web Server는 AWS EC2 환경에서 서비스중이고, 높은 사양의 컴퓨팅을 필요로 하는 Machine Server는 HAIL 연구실 서버를 이용합니다.
+                <br><br>
+                
+                <div style="font-weight: bold;">Web Server</div>
+                <ul style="color: #6a6a6a;">
+                  <li>Database PredictionResults 테이블에서 예측 결과값을 불러와 사용자에게 제공합니다.</li>
+                  <li>예측값 시각화를 위해서 Plotly 라이브러리가 사용되었습니다.</li>
+                </ul>
+
+                <div style="font-weight: bold;">Machine Server</div>
+                <ul style="color: #6a6a6a;">
+                  <li>Python Scheduler 라이브러리를 이용해 모델 학습 자동화 시스템을 구축했습니다.</li>
+                  <li>매일 밤 12시 그 날의 주식 종가 데이터를 Yahoo Finance API를 이용해 가져와 모델 학습을 진행합니다.</li>
+                  <li>업데이트 된 Best Model을 사용해서 다음 20일 예측을 진행한 후 PredictionResults 테이블 데이터를 업데이트합니다.</li>
+                </ul>
+              </p>
+              <br>
+              
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <!-- Services Ends Here -->
+
+
+    <!-- Footer Starts Here -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-md-12">
+            <div class="sub-footer">
+              <p>Copyright &copy; 2021 HGU Hail Laboratory
+				<br>CSS Designed by <a rel="nofollow" href="https://templatemo.com">TemplateMo</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer Ends Here -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Additional Scripts -->
+    <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/owl.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/accordions.js') }}"></script>
+
+    <script language = "text/Javascript">
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+  </body>
+</html>
