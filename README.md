@@ -8,15 +8,3 @@
 
 ## Model
 <p align="center"><img width="596" alt="LSTM" src="https://user-images.githubusercontent.com/48133047/114313128-3089ba00-9b30-11eb-99b6-0d2585ba9a9c.png"></p>
-
-## 사용법:
-```
-git clone https://github.com/nth221/pricePred.git
-pip install -r requirements.txt
-flask run
-```
-
-### 디버깅 모드 활성화 - warning 없애주고, 에러메세지 띄워주고, 코스 수정시 서버 자동 reload
-```
-FLASK_ENV=development
-```
