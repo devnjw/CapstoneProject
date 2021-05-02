@@ -1,5 +1,6 @@
 # Capston Project - Stock Price Prediction
-
+http://fortuneteller.ml/
+<br>
 ## System Architecture
 <p align="center"><img width="907" alt="SystemArchitecture" src="https://user-images.githubusercontent.com/48133047/114313117-28ca1580-9b30-11eb-8673-9c4100cbb816.png"></p>
 
